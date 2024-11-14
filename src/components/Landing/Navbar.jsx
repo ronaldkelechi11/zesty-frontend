@@ -50,10 +50,10 @@ function NavLinks() {
 
     return (
         <div className='text-2xl font- text-black flex flex-col justify-center md:flex-row gap-4 items-center'>
-            <Link end className={navbarStyling} to="">Home</Link>
-            <Link className={navbarStyling} to="/#pricing">About Us</Link>
-            <Link className={navbarStyling} to="/#pricing">Gallery</Link>
-            <Link className={navbarStyling} to="/#pricing">Contact</Link>
+            <Link end className={navbarStyling} to="#hero">Home</Link>
+            <Link className={navbarStyling} to="#services">Our Services</Link>
+            <Link className={navbarStyling} to="#gallery">Gallery</Link>
+            <Link className={navbarStyling} to="#contact">Contact</Link>
         </div>
     )
 }
@@ -62,7 +62,7 @@ function NavLinks() {
 function NavButtons() {
     return (
         <div className="flex flex-col md:flex-row items-center gap-5">
-            <Link to={"login"} className="p-[10px_20px] text-sm text-white font-poppins cursor-pointer rounded-lg bg-primary">Login</Link>
+            <Link to={"login"} className="p-[10px_20px] text-sm text-white font-poppins cursor-pointer rounded-lg bg-gray-500">Login</Link>
         </div>
     )
 }

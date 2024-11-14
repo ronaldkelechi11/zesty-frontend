@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 const Hero = () => {
   
   return (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600 body-font bg-gray-200 h-screen" id="hero">
   <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
     <motion.div
     initial={{x:-500, opacity:0}}
@@ -18,7 +18,7 @@ const Hero = () => {
 Efficient delivery solutions you can trust.
 Connecting you from local routes to global destinations..</p>
       <div className="flex justify-center">
-        <button className="inline-flex text-white bg-primary border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Track</button>
+        <button className="inline-flex text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Track</button>
       </div>
     </motion.div>
 
@@ -27,7 +27,7 @@ Connecting you from local routes to global destinations..</p>
     animate={{x:0, opacity:1}}
     transition={{duration:1}} 
     className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img className="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600"/>
+      <img className="object-cover object-center rounded" alt="hero" src="/public/assets/aerial-view-cargo-ship-cargo-container-harbor.jpg"/>
     </motion.div>
   </div>
 </section>
