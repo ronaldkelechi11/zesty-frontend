@@ -4,19 +4,21 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Landing from './layouts/Landing';
 import Admin from './layouts/Admin';
 import Login from './components/Admin/Login';
+import Track from './layouts/Track';
 
 createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
+  <BrowserRouter>
     <Routes>
-      <Route path='/' element={<Landing/>}/>
-      
-      <Route path='/login' element={<Login/>}/>
-      
-      <Route path='/admin' element={<Admin/>}>
-      {/* Other admin routes */}
+      <Route path='/' element={<Landing />} />
+      <Route path='track' element={<Track />} />
+
+      <Route path='/login' element={<Login />} />
+
+      <Route path='/admin' element={<Admin />}>
+        {/* Other admin routes */}
       </Route>
 
 
     </Routes>
-    </BrowserRouter>
+  </BrowserRouter>
 )

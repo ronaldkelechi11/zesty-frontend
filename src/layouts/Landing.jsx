@@ -8,6 +8,7 @@ import Footer from '../components/Landing/Footer';
 import Contact from '../components/Landing/Contact';
 import OurServices from '../components/Landing/OurServices';
 import { useLocation } from 'react-router-dom';
+import Track from './Track';
 
 
 const Landing = () => {
@@ -26,14 +27,14 @@ const Landing = () => {
 
   return (
     <div className="">
-        <Navbar/>
-        <Hero/>
-        <OurServices/>
-        <Statistics/>
-        <Gallery/>
-        <Testimonial/>
-        <Contact/>
-        <Footer/>
+      <Navbar />
+      <Hero />
+      <OurServices />
+      <Statistics />
+      <Gallery />
+      <Testimonial />
+      <Contact />
+      <Footer />
     </div>
   )
 }

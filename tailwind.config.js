@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#ee252f'
+      },
+      fontFamily: {
+        poppins: 'Poppins',
+        oswald: 'Oswald',
+        grotesk: 'Grotesk'
+      }
+    },
   },
   plugins: [],
 }
