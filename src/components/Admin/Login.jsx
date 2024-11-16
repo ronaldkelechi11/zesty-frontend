@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/ReactToastify.css'
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import BackButton from '../basic/BackButton';
 
 
 const Login = () => {
@@ -18,9 +19,7 @@ const Login = () => {
 
   return (
     <div className="w-screen h-screen bg-gray-200 flex flex-col justify-center items-center">
-      <div className="fixed top-3 left-3 w-10 h-10 bg-red-500 text-3xl flex justify-center items-center text-white rounded-lg cursor-pointer hover:scale-105" onClick={() => { navigate(-1) }}>
-        <ArrowLeft />
-      </div>
+      <BackButton />
 
       <div className="w-3/4 p-3 rounded-lg bg-white">
         <form className="flex flex-col">

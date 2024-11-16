@@ -1,17 +1,22 @@
-import React from 'react'
-import InputField from '../components/Admin/InputField'
+import { useState } from 'react';
+import BackButton from '../components/basic/BackButton';
+import Footer from '../components/Landing/Footer';
+import PackageDetails from '../components/Track/PackageDetails';
+import Trackform from '../components/Track/Trackform';
+import TrackInfo from '../components/Track/TrackInfo';
+import TrackingAssistance from '../components/Track/TrackingAssistance';
 
 const Track = () => {
+    const [packageDetails, setPackageDetails] = useState("")
+
     return (
-        <div className='text-black body-font bg-gray-100 w-screen h-screen'>
-            <div className="container mx-auto flex px-5 py-24 flex-col">
-                <p className='text-6xl font-extrabold'>Track a package</p>
-                <h3 className="tracking-widest mt-4 text-primary text-xs font-medium title-font">
-                    Use Tracking code provided to you to check status of your package
-                </h3>
-                <InputField placeholder={'Tracking Code(G-CARGO)'} />
-                <button className="bg-primary rounded-xl py-3 px-10 text-white self-start">Search</button>
-            </div>
+        <div className='text-black body-font w-screen h-screen'>
+            <BackButton />
+            <TrackInfo />
+            <Trackform setPackageDetails={setPackageDetails} />
+            <PackageDetails packageDetails={packageDetails} />
+            <TrackingAssistance />
+            <Footer />
         </div>
     )
 }
