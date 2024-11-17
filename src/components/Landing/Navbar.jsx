@@ -1,6 +1,8 @@
-import { MenuHamburger } from "@iconsans/react/bold";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { AiOutlineMenu } from "react-icons/ai";
+import { FiMenu, FiX } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 
@@ -28,8 +30,28 @@ const Navbar = () => {
                 <NavButtons />
             </div>
 
-            <div className="md:hidden p-2 transition-all cursor-pointer text-primary" onClick={toggleNav}>
-                {isOpen ? <MenuHamburger /> : <MenuHamburger />}
+            <div className="md:hidden p-2 transition-all cursor-pointer text-primary text-2xl" onClick={toggleNav}>
+                {isOpen ?
+                    <motion.div
+                        key="close"
+                        initial={{ opacity: 0, rotate: 90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: -90 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <FiX />
+                    </motion.div>
+                    :
+                    <motion.div
+                        key="menu"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <FiMenu />
+                    </motion.div>
+                }
             </div>
 
             {/* When mobile isOpen it should display this */}

@@ -44,10 +44,6 @@ const PackageDetails = ({ packageDetails }) => {
         setFetchedPackage(packageDetails)
     }, [packageDetails])
 
-
-
-
-
     return (
         <div className="p-3">
             {
@@ -55,7 +51,7 @@ const PackageDetails = ({ packageDetails }) => {
 
                 <div className="flex flex-col p-3 font-grotesk">
                     <div className="flex justify-center items-center ">
-                        <img src="/assets/logo.jpg" alt="" className="w-32 h-36" />
+                        <img src="/assets/logo.jpg" alt="" className="w-48 h-52" />
                     </div>
                     <p className="text-center">{fetchedPackage.trackingId}</p>
 
