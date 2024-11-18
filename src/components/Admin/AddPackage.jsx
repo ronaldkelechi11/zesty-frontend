@@ -30,20 +30,8 @@ const AddPackage = () => {
             carrier: "ZESTY",
             comments: "",
             status: true,
-            shipingContent: [
-                // {
-                //     content: "",
-                //     quantity: "",
-                //     weight: ""
-                // }
-            ],
-            shipingTracking: [
-                // {
-                //     datetime: "",
-                //     activity: "",
-                //     location: ""
-                // }
-            ]
+            shipingContent: [],
+            shipingTracking: []
         }
     )
 
@@ -51,9 +39,9 @@ const AddPackage = () => {
     const [quantity, setQuantity] = useState("");
     const [content, setContent] = useState("");
     const [weight, setWeight] = useState("");
-
-    const addToArray = async () => {
-        fetchedPackage.shipingContent.push(
+    const [contentArray, setContentArray] = useState([])
+    const addToContentArray = () => {
+        contentArray.push(
             { quantity, content, weight: `${weight}Kg` }
         );
         setQuantity("");
@@ -66,18 +54,16 @@ const AddPackage = () => {
     const [time, setTime] = useState("");
     const [activity, setActivity] = useState("");
     const [location, setLocation] = useState("");
+    const [trackingArray, setTrackingArray] = useState([])
     const addToTrackingArray = async () => {
         const dt = `${date} ${time}`;
-
-        fetchedPackage.shipingTracking.push(
+        trackingArray.push(
             { datetime: dt, activity, location }
         )
         setDate("");
         setTime("");
         setActivity("");
         setLocation("");
-        console.log(fetchedPackage.shipingTracking);
-
     };
 
     const handleChange = (e) => {
@@ -112,13 +98,15 @@ const AddPackage = () => {
 
     function handleSubmit() {
         setIsLoading(true)
-        console.log(fetchedPackage);
+        setFetchedPackage({ shipingContent: contentArray, shipingTracking: trackingArray, trackingId: trackingCode })
+
         axios.post(API_URL + "/admin", { fetchedPackage })
             .then((result) => {
                 toast.success(`New Package Added`)
                 setIsLoading(false)
             }).catch((err) => {
                 toast.error(`${err?.message}`)
+                console.log(err);
                 setIsLoading(false)
             });
     }
@@ -187,7 +175,7 @@ const AddPackage = () => {
                 <div className="mt-8">
                     <h3 className="text-xl font-semibold text-gray-800 mb-4">Shipping Content</h3>
                     <div className="space-y-4">
-                        {fetchedPackage.shipingContent.map((item, index) => (
+                        {contentArray.map((item, index) => (
                             <div key={index} className="p-4 bg-gray-50 border rounded">
                                 <p><strong>Quantity:</strong> {item.quantity}</p>
                                 <p><strong>Content:</strong> {item.content}</p>
@@ -220,7 +208,7 @@ const AddPackage = () => {
                             />
                         </div>
                         <button
-                            onClick={addToArray}
+                            onClick={addToContentArray}
                             className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
                         >
                             Add Content
@@ -233,7 +221,7 @@ const AddPackage = () => {
                 <div className="mt-8">
                     <h3 className="font-bold">Shipment Tracking</h3>
                     <div className="space-y-4">
-                        {fetchedPackage.shipingTracking?.map((item, index) => (
+                        {trackingArray.map((item, index) => (
                             <div key={index} className="p-4 bg-gray-50 border rounded">
                                 <p><strong>Date/Time:</strong> {item.datetime}</p>
                                 <p><strong>Activity:</strong> {item.activity}</p>

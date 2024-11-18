@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from 'framer-motion';
 import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "@iconsans/react/linear";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -42,19 +43,27 @@ const Sidebar = () => {
 
             {/* Sidebar */}
             <div
-                className={`fixed top-0 left-0 h-full bg-gray-500 text-white transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                className={`fixed top-0 left-0 h-full bg-white text-black transform ${isOpen ? "translate-x-0 z-[51]" : "-translate-x-full"
                     } transition-transform duration-300 ease-in-out w-64 shadow-lg`}
             >
-                <div className="p-6 mt-16">
-                    <h2 className="text-xl font-bold mb-4 border-b border-gray-100">Administrator</h2>
-                    <ul className="space-y-3 flex flex-col">
-                        <Link to={''} className="hover:underline cursor-pointer">Home</Link>
-                        <Link to={'add'} className="hover:underline cursor-pointer">Add Package</Link>
-                        <Link to={'edit'} className="hover:underline cursor-pointer">Edit Package</Link>
-                        <Link to={'/'} className="hover:underline cursor-pointer">Log Out</Link>
-                    </ul>
+                <div className="mt-16">
+                    <img src="/public/assets/logo.jpg" className="h-36" alt="" />
+                    <div className="space-y-3 flex flex-col gap-1 font-grotesk">
+                        <Link to={''} className="hover:bg-primary cursor-pointer h-full p-3 hover:text-white ">Home </Link>
+                        <Link to={'add'} className="hover:bg-primary cursor-pointer h-full p-3 hover:text-white">Add Package</Link>
+                        <Link to={'edit'} className="hover:bg-primary cursor-pointer h-full p-3 hover:text-white">Edit Package</Link>
+                        <Link to={'/'} className="hover:bg-primary cursor-pointer h-full p-3 hover:text-white">Log Out</Link>
+                    </div>
                 </div>
             </div>
+
+            {/* Overlay for Mobile */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                    onClick={toggleSidebar}
+                ></div>
+            )}
         </div>
     );
 };

@@ -2,7 +2,7 @@
 
 const TrackInfo = () => {
     return (
-        <div className='text-black font-grotesk  p-3'>
+        <div className='text-black font-grotesk p-5'>
             <div className="flex flex-col gap-2 p-1">
                 <h2 className='text-3xl mt-12'>Manage multiple shipments with customized tracking, reports, and more.</h2>
 

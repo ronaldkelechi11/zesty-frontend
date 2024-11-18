@@ -30,7 +30,7 @@ const Trackform = ({ setPackageDetails }) => {
                 setIsLoading(false)
                 toast.success('Package Found')
             }).catch((err) => {
-                toast.error(`${err?.message}`)
+                toast.error(`${err.message}`)
                 setIsLoading(false)
             });
     }
@@ -39,7 +39,7 @@ const Trackform = ({ setPackageDetails }) => {
         <div className='bg-white text-black font-grotesk p-3'>
             <ToastContainer position='top-right' limit={2} hideProgressBar closeOnClick={true} />
 
-            <p className='font-extrabold text-center bg-gray-100 py-2 text-3xl uppercase'>Enter your tracking Code</p>
+            <p className='font-extrabold text-center py-2 text-3xl uppercase'>Enter your tracking Code</p>
             <InputField type={'text'} placeholder={'Tracking Code'} value={trackingId}
                 onChange={({ target }) => { setTrackingId(target.value) }} />
             <button className="p-[10px_20px] text-sm text-white font-grotesk cursor-pointer rounded-lg bg-primary w-full md:w-auto flex justify-center items-center" onClick={handleSubmit}>

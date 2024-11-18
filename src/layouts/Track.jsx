@@ -10,14 +10,17 @@ const Track = () => {
     const [packageDetails, setPackageDetails] = useState("")
 
     return (
-        <div className='text-black body-font w-screen'>
-            <BackButton />
-            <TrackInfo />
-            <Trackform setPackageDetails={setPackageDetails} />
-            <PackageDetails packageDetails={packageDetails} />
-            <TrackingAssistance />
+        <>
+            <div className='text-black body-font w-screen flex justify-center flex-col items-center'>
+                <BackButton />
+                <TrackInfo />
+                <Trackform setPackageDetails={setPackageDetails} />
+                <PackageDetails packageDetails={packageDetails} />
+                <TrackingAssistance />
+            </div>
             <Footer />
-        </div>
+        </>
+
     )
 }
 

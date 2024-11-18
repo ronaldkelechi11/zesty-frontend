@@ -11,7 +11,7 @@ const Admin = () => {
       <AdminSideBar />
 
       {/* Layout Screen */}
-      <div className="flex-1">
+      <div className="flex-1 md:justify-center md:flex">
         <Outlet />
       </div>
     </div>
