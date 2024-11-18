@@ -2,12 +2,13 @@ import axios from 'axios'
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { CgSpinner } from 'react-icons/cg'
+import { FaSpinner } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 
 const AdminAllPackages = () => {
     const API_URL = import.meta.env.VITE_API_URL
-    const [fetchedpackages, setFetchedPackages] = useState([])
+    const [fetchedpackages, setFetchedPackages] = useState()
 
     useEffect(() => {
         axios.get(API_URL + '/admin')
@@ -25,15 +26,32 @@ const AdminAllPackages = () => {
             <ToastContainer position='top-right' limit={2} hideProgressBar closeOnClick={true} />
 
 
-            <div className="flex flex-col">
-                {
-                    fetchedpackages.map((item, index) => {
-                        return (
-                            <PackageItem item={item} key={index} />
-                        )
-                    })
-                }
-            </div>
+            {
+                fetchedpackages ?
+                    <div className="flex flex-col">
+                        {
+                            fetchedpackages.map((item, index) => {
+                                return (
+                                    <PackageItem item={item} key={index} />
+                                )
+                            })
+                        }
+                    </div>
+                    :
+                    <div className='flex p-2'>
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                            className='text-3xl text-primary'
+                        >
+                            <CgSpinner />
+                        </motion.div>
+                    </div>
+
+            }
+
+
+
         </div>
     )
 }
@@ -76,7 +94,7 @@ function PackageItem({ item }) {
                         : 'Done'}
                 </button>
 
-                <button className="bg-purple-500 text-white px-4 py-2 rounded-md" onClick={() => { navigate('edit', { state: item?.trackingId }) }}>Edit</button>
+                <button className="bg-purple-500 text-white px-4 py-2 rounded-md" onClick={() => { navigate('edit', { state: item }) }}>Edit</button>
             </div>
         </div>
     )
