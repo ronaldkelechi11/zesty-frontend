@@ -51,7 +51,7 @@ const Sidebar = () => {
                         <Link to={''} className="hover:underline cursor-pointer">Home</Link>
                         <Link to={'add'} className="hover:underline cursor-pointer">Add Package</Link>
                         <Link to={'edit'} className="hover:underline cursor-pointer">Edit Package</Link>
-                        <a href="#" className="hover:underline cursor-pointer">Log Out</a>
+                        <Link to={'/'} className="hover:underline cursor-pointer">Log Out</Link>
                     </ul>
                 </div>
             </div>
