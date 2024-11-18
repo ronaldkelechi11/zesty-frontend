@@ -55,7 +55,7 @@ const OurServices = () => {
           </div>
           <AnimateIntoView delay={1} className="lg:w-1/2 w-full leading-relaxed text-gray-500 mt-3">From reliable freight and shipping services to efficient last-mile delivery, our team ensures every package reaches its destination on time. We adapt to the demands of your business, offering solutions that keep you moving forward. Experience logistics that&apos;s built on trust, speed, and customer satisfaction.</AnimateIntoView>
         </div>
-        <AnimateIntoView delay={1.22} className="flex flex-wrap -m-4">
+        <AnimateIntoView delay={1.5} className="flex flex-wrap -m-4">
           {
             services.map((service) => {
               return (
