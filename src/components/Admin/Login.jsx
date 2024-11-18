@@ -6,13 +6,14 @@ import { useState } from "react"
 import BackButton from '../basic/BackButton';
 import axios from "axios"
 import { CgSpinner } from "react-icons/cg"
+import { motion } from 'framer-motion';
+
 
 
 const Login = () => {
   const navigate = useNavigate()
   const API_URL = import.meta.env.VITE_API_URL
-  const [email, seimport { motion } from 'framer-motion';
-tEmail] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
