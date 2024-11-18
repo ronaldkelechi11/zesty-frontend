@@ -28,6 +28,8 @@ const Login = () => {
         navigate('/admin')
       }).catch((err) => {
         toast.error(`${err?.message}`)
+        console.log(err);
+        setIsLoading(false)
       });
   }
 
@@ -43,7 +45,7 @@ const Login = () => {
           <InputField label={'Password'} type={'password'} placeholder={'Admin Password'} required value={password}
             onChange={(e) => { setPassword(e.target.value) }}
           />
-          <button onClick={handleSubmit} className="bg-primary text-white rounded-lg p-[10px_30px] mt-5">
+          <button onClick={handleSubmit} className="bg-primary text-white rounded-lg p-[10px_30px] mt-5 flex justify-center items-center">
             {isLoading ?
               <motion.div
                 animate={{ rotate: 360 }}

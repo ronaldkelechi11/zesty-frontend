@@ -11,29 +11,27 @@ const AddPackage = () => {
     const API_URL = import.meta.env.VITE_API_URL
     const [isLoading, setIsLoading] = useState(false)
     const [trackingCode, setTrackingCode] = useState('0000000000000000-CARGO')
-    const [fetchedPackage, setFetchedPackage] = useState(
-        {
-            trackingId: "",
-            senderName: "",
-            senderAddress: "",
-            senderEmailAddress: "",
-            senderTelephone: "",
-            receiverName: "",
-            receiverAddress: "",
-            receiverEmailAddress: "",
-            receiverTelephone: "",
-            originCountry: "",
-            destinationCountry: "",
-            shipingDate: "",
-            expectedDeliveryDate: "",
-            typeOfShipment: "",
-            carrier: "ZESTY",
-            comments: "",
-            status: true,
-            shipingContent: [],
-            shipingTracking: []
-        }
-    )
+    const [fetchedPackage, setFetchedPackage] = useState({
+        trackingId: "",
+        senderName: "",
+        senderAddress: "",
+        senderEmailAddress: "",
+        senderTelephone: "",
+        receiverName: "",
+        receiverAddress: "",
+        receiverEmailAddress: "",
+        receiverTelephone: "",
+        originCountry: "",
+        destinationCountry: "",
+        shipingDate: "",
+        expectedDeliveryDate: "",
+        typeOfShipment: "",
+        carrier: "ZESTY",
+        comments: "",
+        status: true,
+        shipingContent: [],
+        shipingTracking: []
+    })
 
     // For shipping content
     const [quantity, setQuantity] = useState("");
@@ -41,7 +39,7 @@ const AddPackage = () => {
     const [weight, setWeight] = useState("");
     const [contentArray, setContentArray] = useState([])
     const addToContentArray = () => {
-        contentArray.push(
+        fetchedPackage.shipingContent.push(
             { quantity, content, weight: `${weight}Kg` }
         );
         setQuantity("");
@@ -57,7 +55,7 @@ const AddPackage = () => {
     const [trackingArray, setTrackingArray] = useState([])
     const addToTrackingArray = async () => {
         const dt = `${date} ${time}`;
-        trackingArray.push(
+        fetchedPackage.shipingTracking.push(
             { datetime: dt, activity, location }
         )
         setDate("");
@@ -94,19 +92,20 @@ const AddPackage = () => {
     }
     const generateTrackingCode = () => {
         setTrackingCode(generateRandomString());
+        setFetchedPackage({ trackingId: trackingCode })
     };
 
-    function handleSubmit() {
+    async function handleSubmit() {
         setIsLoading(true)
-        setFetchedPackage({ shipingContent: contentArray, shipingTracking: trackingArray, trackingId: trackingCode })
+        // await setFetchedPackage({ shipingContent: contentArray, shipingTracking: trackingArray, trackingId: trackingCode })
 
         axios.post(API_URL + "/admin", { fetchedPackage })
             .then((result) => {
                 toast.success(`New Package Added`)
                 setIsLoading(false)
-            }).catch((err) => {
-                toast.error(`${err?.message}`)
-                console.log(err);
+            }).catch(({ response }) => {
+                toast.error(`${response.data.message}`)
+                console.log(fetchedPackage);
                 setIsLoading(false)
             });
     }
@@ -115,13 +114,6 @@ const AddPackage = () => {
         <div className='p-3'>
             <ToastContainer position='top-right' limit={2} hideProgressBar closeOnClick={true} />
             <p className='mt-12 font-extrabold text-2xl border-b border-b-black'>Add Packages</p>
-
-            <div className="w-full flex flex-col gap-2 mt-2">
-                <p className='border border-gray-200 p-2 flex flex-row items-center justify-between'>{trackingCode}<Clipboard onClick={copyToClipboard} /></p>
-                <button className="bg-purple-500 text-white px-3 py-3 rounded-md" onClick={generateTrackingCode}>
-                    Generate
-                </button>
-            </div>
 
             <div className="flex flex-col">
                 <InputField label={'Sender Name'} placeholder={"Sender Name"} name={"senderName"} value={fetchedPackage.senderName} type={'text'} onChange={handleChange} />
@@ -175,7 +167,7 @@ const AddPackage = () => {
                 <div className="mt-8">
                     <h3 className="text-xl font-semibold text-gray-800 mb-4">Shipping Content</h3>
                     <div className="space-y-4">
-                        {contentArray.map((item, index) => (
+                        {fetchedPackage.shipingContent?.map((item, index) => (
                             <div key={index} className="p-4 bg-gray-50 border rounded">
                                 <p><strong>Quantity:</strong> {item.quantity}</p>
                                 <p><strong>Content:</strong> {item.content}</p>
@@ -221,7 +213,7 @@ const AddPackage = () => {
                 <div className="mt-8">
                     <h3 className="font-bold">Shipment Tracking</h3>
                     <div className="space-y-4">
-                        {trackingArray.map((item, index) => (
+                        {fetchedPackage.shipingTracking?.map((item, index) => (
                             <div key={index} className="p-4 bg-gray-50 border rounded">
                                 <p><strong>Date/Time:</strong> {item.datetime}</p>
                                 <p><strong>Activity:</strong> {item.activity}</p>
@@ -257,6 +249,7 @@ const AddPackage = () => {
                             className="p-2 border rounded"
                         />
                     </div>
+
                     <button
                         onClick={addToTrackingArray}
                         className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600 transition"
@@ -265,6 +258,13 @@ const AddPackage = () => {
                     </button>
                 </div>
 
+                {/* Generate Tracking Code */}
+                <div className="w-full flex flex-col gap-2 mt-8">
+                    <p className='border border-gray-200 p-2 flex flex-row items-center justify-between'>{trackingCode}<Clipboard onClick={copyToClipboard} /></p>
+                    <button className="bg-purple-500 text-white px-3 py-3 rounded-md" onClick={generateTrackingCode}>
+                        Generate
+                    </button>
+                </div>
 
 
                 <button className="bg-primary text-white px-4 py-3 rounded-md flex justify-center items-center mt-3" onClick={handleSubmit}>
