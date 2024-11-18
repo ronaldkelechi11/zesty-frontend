@@ -4,7 +4,7 @@ const Contact = () => {
     <section className="text-gray-600 body-font relative" id='contact'>
       <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
         <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
-          <iframe width="100%" height="100%" className="absolute inset-0" src="https://www.google.com/maps/search/147n+Forest+Manor+Rd,+North+York,+Toronto,+ON+M2J+0A9,+Canada/@43.7724434,-79.3475626,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI0MTExMy4xIKXMDSoASAFQAw%3D%3D" ></iframe>
+          <iframe width="100%" height="100%" className="absolute inset-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1440.4862399581075!2d-79.34616267434409!3d43.77343009520382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4d307481ac3ab%3A0xc0e877f0b583bf43!2s65%20Forest%20Manor%20Rd!5e0!3m2!1sen!2sng!4v1731919398289!5m2!1sen!2sng" ></iframe>
           <div className="bg-white relative flex flex-wrap py-6 rounded shadow-md">
             <div className="lg:w-1/2 px-6">
               <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">ADDRESS</h2>
