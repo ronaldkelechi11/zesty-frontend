@@ -8,11 +8,14 @@ import Track from './layouts/Track';
 import AdminAllPackages from './components/Admin/AdminAllPackages';
 import EditPackage from './components/Admin/EditPackage'
 import AddPackage from './components/Admin/AddPackage';
+import ProtectedRoutes from './components/basic/ProtectedRoutes';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
+
       <Route path='/' element={<Landing />} />
+
       <Route path='track' element={<Track />} />
 
       <Route path='/login' element={<Login />} />
@@ -22,7 +25,6 @@ createRoot(document.getElementById('root')).render(
         <Route path='add' element={<AddPackage />} />
         <Route path='edit' element={<EditPackage />} />
       </Route>
-
 
     </Routes>
   </BrowserRouter>

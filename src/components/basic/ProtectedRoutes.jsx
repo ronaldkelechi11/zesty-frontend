@@ -1,18 +1,13 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
+import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedRoutes = () => {
-    const navigate = useNavigate()
-
+    let canActivate = null
     useEffect(() => {
-        console.log(!sessionStorage.getItem('loggedIn'));
-        if (!sessionStorage.getItem('loggedIn')) {
-            navigate("/")
-        }
+        console.log(sessionStorage.getItem('loggedIn'));
+        canActivate = sessionStorage.getItem('loggedIn')
     }, [])
-
-    return (
-        <div>ProtectedRoutes</div>
-    )
+    return (canActivate ? <Outlet /> : <Navigate to="/login" />)
 }
 
 export default ProtectedRoutes
