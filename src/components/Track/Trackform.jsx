@@ -6,13 +6,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 import { useNavigate } from 'react-router-dom';
 import { CgSpinner } from 'react-icons/cg';
+import { motion } from 'framer-motion';
+
 
 const Trackform = ({ setPackageDetails }) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false)
     const [trackingId, setTrackingId] = useState('')
     const API_URL = import.meta.env.VITE_API_URL
-    import { motion } from 'framer-motion';
 
     const handleSubmit = () => {
         setIsLoading(true)
