@@ -11,24 +11,24 @@ const Gallery = () => {
         <div className="flex flex-wrap md:-m-2 -m-1">
           <div className="flex flex-wrap w-1/2">
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/public/assets/wp3714801.jpeg" />
+              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/wp3714801.jpeg" />
             </div>
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/public/assets/shipindus.jpeg" />
+              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/shipindus.jpeg" />
             </div>
             <div className="md:p-2 p-1 w-full">
-              <img alt="gallery" className="w-full h-full object-cover object-center block" src="/public/assets/courier_girl.jpg" />
+              <img alt="gallery" className="w-full h-full object-cover object-center block" src="/assets/courier_girl.jpg" />
             </div>
           </div>
           <div className="flex flex-wrap w-1/2">
             <div className="md:p-2 p-1 w-full">
-              <img alt="gallery" className="w-full h-full object-cover object-center block" src="/public/assets/delivery_man.jpg" />
+              <img alt="gallery" className="w-full h-full object-cover object-center block" src="/assets/delivery_man.jpg" />
             </div>
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/public/assets/image1.jpeg" />
+              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/image1.jpeg" />
             </div>
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/public/assets/parcels.jpg" />
+              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/parcels.jpg" />
             </div>
           </div>
         </div>

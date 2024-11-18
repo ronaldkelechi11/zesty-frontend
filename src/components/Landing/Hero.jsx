@@ -28,7 +28,7 @@ const Hero = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
           className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-          <img className="object-cover object-center rounded" alt="hero" src="/public/assets/logo.jpg" />
+          <img className="object-cover object-center rounded" alt="hero" src="/assets/logo.jpg" />
         </motion.div>
       </div>
     </section>

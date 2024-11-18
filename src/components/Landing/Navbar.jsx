@@ -18,7 +18,7 @@ const Navbar = () => {
 
             <Link reloadDocument
                 className="text-primary w-16 h-16 font-lato cursor-pointer uppercase">
-                <img src="/public/assets/logo.jpg" alt="Zesty Logistics Logo" />
+                <img src="/assets/logo.jpg" alt="Zesty Logistics Logo" />
             </Link>
 
 
