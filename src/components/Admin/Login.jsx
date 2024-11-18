@@ -5,18 +5,20 @@ import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import BackButton from '../basic/BackButton';
 import axios from "axios"
+import { CgSpinner } from "react-icons/cg"
 
 
 const Login = () => {
   const navigate = useNavigate()
   const API_URL = import.meta.env.VITE_API_URL
-  const [email, setEmail] = useState('')
+  const [email, seimport { motion } from 'framer-motion';
+tEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(`${API_URL}/login`);
-
+    setIsLoading(true)
 
     axios.post(`${API_URL}/login`, { email, password })
       .then((result) => {
@@ -40,7 +42,16 @@ const Login = () => {
           <InputField label={'Password'} type={'password'} placeholder={'Admin Password'} required value={password}
             onChange={(e) => { setPassword(e.target.value) }}
           />
-          <button onClick={handleSubmit} className="bg-primary text-white rounded-lg p-[10px_30px] mt-5">Login</button>
+          <button onClick={handleSubmit} className="bg-primary text-white rounded-lg p-[10px_30px] mt-5">
+            {isLoading ?
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <CgSpinner />
+              </motion.div>
+              : 'Login'}
+          </button>
         </form>
       </div>
 

@@ -18,7 +18,7 @@ const Hero = () => {
           <p className="mb-8 leading-relaxed font-poppins">Dependable logistics for businesses of all sizes.
             Efficient delivery solutions you can trust.
             Connecting you from local routes to global destinations..</p>
-          <Link to={'#track'} className="flex justify-center">
+          <Link to={'/track'} className="flex justify-center">
             <button className="inline-flex text-white bg-primary border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg font-grotesk">Track</button>
           </Link>
         </motion.div>
