@@ -15,11 +15,10 @@ const Login = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log('Loading...');
-    console.log(API_URL + "/login");
+    console.log(`${API_URL}/login`);
 
 
-    axios.post(API_URL + "/login", { email, password })
+    axios.post(`${API_URL}/login`, { email, password })
       .then((result) => {
         toast.success('Admin Login Successful')
         sessionStorage.setItem('loggedIn', true)
