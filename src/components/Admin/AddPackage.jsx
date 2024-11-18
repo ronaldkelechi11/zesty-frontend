@@ -6,32 +6,35 @@ import InputField from './InputField';
 import { motion } from 'framer-motion';
 import { CgSpinner } from 'react-icons/cg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AddPackage = () => {
+    const navigate = useNavigate()
     const API_URL = import.meta.env.VITE_API_URL
     const [isLoading, setIsLoading] = useState(false)
     const [trackingCode, setTrackingCode] = useState('0000000000000000-CARGO')
-    const [fetchedPackage, setFetchedPackage] = useState({
-        trackingId: "",
-        senderName: "",
-        senderAddress: "",
-        senderEmailAddress: "",
-        senderTelephone: "",
-        receiverName: "",
-        receiverAddress: "",
-        receiverEmailAddress: "",
-        receiverTelephone: "",
-        originCountry: "",
-        destinationCountry: "",
-        shipingDate: "",
-        expectedDeliveryDate: "",
-        typeOfShipment: "",
-        carrier: "ZESTY",
-        comments: "",
-        status: true,
-        shipingContent: [],
-        shipingTracking: []
-    })
+    const [fetchedPackage, setFetchedPackage] = useState(
+        {
+            trackingId: "X23IJDSIWI366KNS-CARGO",
+            senderName: "John The Third",
+            senderAddress: "John doe address 165th",
+            senderEmailAddress: "johndoe@gmail.com",
+            senderTelephone: "+234 97979797",
+            receiverName: "Sussy client",
+            receiverAddress: "sussy house, 234 street, NYC",
+            receiverEmailAddress: "sussyclient@gmail.com",
+            receiverTelephone: "+1 123456789",
+            originCountry: "China",
+            destinationCountry: "Japan",
+            shipingDate: "12-11-2024",
+            expectedDeliveryDate: "16-11-2024",
+            typeOfShipment: "Luggage",
+            carrier: "",
+            comments: "Approved for Transit",
+            status: false,
+            shipingContent: [],
+            shipingTracking: []
+        })
 
     // For shipping content
     const [quantity, setQuantity] = useState("");
@@ -50,17 +53,17 @@ const AddPackage = () => {
     // For tracking
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
-    const [activity, setActivity] = useState("");
+    const [remark, setRemark] = useState("");
     const [location, setLocation] = useState("");
     const [trackingArray, setTrackingArray] = useState([])
     const addToTrackingArray = async () => {
         const dt = `${date} ${time}`;
         fetchedPackage.shipingTracking.push(
-            { datetime: dt, activity, location }
+            { datetime: dt, remark, location }
         )
         setDate("");
         setTime("");
-        setActivity("");
+        setRemark("");
         setLocation("");
     };
 
@@ -92,16 +95,39 @@ const AddPackage = () => {
     }
     const generateTrackingCode = () => {
         setTrackingCode(generateRandomString());
-        setFetchedPackage({ trackingId: trackingCode })
     };
 
     async function handleSubmit() {
         setIsLoading(true)
-        // await setFetchedPackage({ shipingContent: contentArray, shipingTracking: trackingArray, trackingId: trackingCode })
+        console.log(fetchedPackage);
 
-        axios.post(API_URL + "/admin", { fetchedPackage })
+
+        axios.post(API_URL + "/admin",
+            {
+                trackingId: fetchedPackage.trackingId,
+                senderName: fetchedPackage.senderName,
+                senderAddress: fetchedPackage.senderAddress,
+                senderEmailAddress: fetchedPackage.senderEmailAddress,
+                senderTelephone: fetchedPackage.senderTelephone,
+                receiverName: fetchedPackage.receiverName,
+                receiverAddress: fetchedPackage.receiverAddress,
+                receiverEmailAddress: fetchedPackage.receiverEmailAddress,
+                receiverTelephone: fetchedPackage.receiverTelephone,
+                originCountry: fetchedPackage.originCountry,
+                destinationCountry: fetchedPackage.destinationCountry,
+                shipingDate: fetchedPackage.shipingDate,
+                expectedDeliveryDate: fetchedPackage.expectedDeliveryDate,
+                typeOfShipment: fetchedPackage.typeOfShipment,
+                carrier: "ZESTY",
+                comments: fetchedPackage.comments,
+                status: fetchedPackage.status,
+                shipingContent: fetchedPackage.shipingContent,
+                shipingTracking: fetchedPackage.shipingTracking
+            }
+        )
             .then((result) => {
                 toast.success(`New Package Added`)
+                navigate('')
                 setIsLoading(false)
             }).catch(({ response }) => {
                 toast.error(`${response.data.message}`)
@@ -216,7 +242,7 @@ const AddPackage = () => {
                         {fetchedPackage.shipingTracking?.map((item, index) => (
                             <div key={index} className="p-4 bg-gray-50 border rounded">
                                 <p><strong>Date/Time:</strong> {item.datetime}</p>
-                                <p><strong>Activity:</strong> {item.activity}</p>
+                                <p><strong>Remark:</strong> {item.remark}</p>
                                 <p><strong>Location:</strong> {item.location}</p>
                             </div>
                         ))}
@@ -225,20 +251,22 @@ const AddPackage = () => {
                         <input
                             type="date"
                             value={date}
+                            placeholder='date'
                             onChange={(e) => setDate(e.target.value)}
                             className="p-2 border rounded text-gray-400 w-full"
                         />
                         <input
                             type="time"
                             value={time}
+                            placeholder='time'
                             onChange={(e) => setTime(e.target.value)}
                             className="p-2 border rounded text-gray-400 w-full"
                         />
                         <input
                             type="text"
-                            placeholder="Activity"
-                            value={activity}
-                            onChange={(e) => setActivity(e.target.value)}
+                            placeholder="Remark"
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)}
                             className="p-2 border rounded"
                         />
                         <input

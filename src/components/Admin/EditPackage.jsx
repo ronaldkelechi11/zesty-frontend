@@ -41,7 +41,7 @@ const EditPackage = () => {
             shipingTracking: [
                 {
                     datetime: "",
-                    activity: "",
+                    remark: "",
                     location: ""
                 }
             ]
@@ -51,16 +51,16 @@ const EditPackage = () => {
     // For tracking
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
-    const [activity, setActivity] = useState("");
+    const [remark, setRemark] = useState("");
     const [itemLocation, setItemLocation] = useState("");
     const addToTrackingArray = async () => {
         const dt = `${date} ${time}`;
         fetchedPackage.shipingTracking.push(
-            { datetime: dt, activity, itemLocation }
+            { datetime: dt, remark, itemLocation }
         )
         setDate("");
         setTime("");
-        setActivity("");
+        setRemark("");
         setItemLocation("");
     };
 
@@ -213,7 +213,7 @@ const EditPackage = () => {
                         {fetchedPackage.shipingTracking.map((item, index) => (
                             <div key={index} className="p-4 bg-gray-50 border rounded">
                                 <p><strong>Date/Time:</strong> {item.datetime}</p>
-                                <p><strong>Activity:</strong> {item.activity}</p>
+                                <p><strong>Remark:</strong> {item.remark}</p>
                                 <p><strong>Location:</strong> {item.location}</p>
                             </div>
                         ))}
@@ -233,9 +233,9 @@ const EditPackage = () => {
                         />
                         <input
                             type="text"
-                            placeholder="Activity"
-                            value={activity}
-                            onChange={(e) => setActivity(e.target.value)}
+                            placeholder="Remark"
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)}
                             className="p-2 border rounded"
                         />
                         <input
