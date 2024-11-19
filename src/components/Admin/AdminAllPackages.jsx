@@ -57,7 +57,16 @@ const AdminAllPackages = () => {
             ) : (
                 <div className="w-full flex-1 text-black text-2xl font-oswald flex justify-center items-center">
                     <div className="flex flex-col gap-2 items-center">
-                        <p>No packages Found</p>
+                        <div className="flex p-2">
+                            <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 1, repeat: Infinity }}
+                                className="text-3xl text-primary"
+                            >
+                                <CgSpinner />
+                            </motion.div>
+                        </div>
+                        <p>No packages</p>
                     </div>
                 </div>
             )}
