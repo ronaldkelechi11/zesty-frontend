@@ -48,27 +48,42 @@ const EditPackage = () => {
         }
     )
 
+    // Content
+    const [content, setContent] = useState({ quantity: '', content: '', weight: '' });
+    const addToContentArray = () => {
+        if (!content.quantity || !content.content || !content.weight) {
+            toast.error('All fields in shipping content are required');
+            return;
+        }
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingContent: [...prev.shipingContent, { ...content, weight: `${content.weight}Kg` }],
+        }));
+        setContent({ quantity: '', content: '', weight: '' });
+    };
+
     // For tracking
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
-    const [remark, setRemark] = useState("");
-    const [itemLocation, setItemLocation] = useState("");
+    const [tracking, setTracking] = useState({ date: '', time: '', remark: '', location: '' });
+
     const addToTrackingArray = async () => {
-        const dt = `${date} ${time}`;
-        fetchedPackage.shipingTracking.push(
-            { datetime: dt, remark, itemLocation }
-        )
-        setDate("");
-        setTime("");
-        setRemark("");
-        setItemLocation("");
+        if (!tracking.date || !tracking.time || !tracking.remark || !tracking.location) {
+            toast.error('All fields in tracking are required');
+            return;
+        }
+        const datetime = `${tracking.date} ${tracking.time}`;
+
+        await setFetchedPackage((prev) => ({
+            ...prev,
+            shipingTracking: [...prev.shipingTracking, { datetime, remark: tracking.remark, location: tracking.location }],
+        }));
+        setTracking({ date: '', time: '', remark: '', location: '' });
     };
 
 
     // Incase you pass an edit from the All packages layout
     useEffect(() => {
         if (location.state) {
-            setFetchedPackage(location.state)
+            setFetchedPackage(location.state);
         }
     }, [])
 
@@ -91,10 +106,32 @@ const EditPackage = () => {
     };
 
     function handleSubmit() {
-        setIsLoading(true)
         console.log(fetchedPackage);
+
+        setIsLoading(true)
         axios.put(API_URL + "/admin", { fetchedPackage })
             .then((result) => {
+                setFetchedPackage({
+                    trackingId: '',
+                    senderName: '',
+                    senderAddress: '',
+                    senderEmailAddress: '',
+                    senderTelephone: '',
+                    receiverName: '',
+                    receiverAddress: '',
+                    receiverEmailAddress: '',
+                    receiverTelephone: '',
+                    originCountry: '',
+                    destinationCountry: '',
+                    shipingDate: '',
+                    expectedDeliveryDate: '',
+                    typeOfShipment: '',
+                    carrier: '',
+                    comments: '',
+                    status: false,
+                    shipingContent: [],
+                    shipingTracking: [],
+                });
                 toast.success(`Package Updated`)
                 setIsLoading(false)
             }).catch((err) => {
@@ -161,99 +198,11 @@ const EditPackage = () => {
 
 
                 {/* Shipping Content Section */}
-                <div className="mt-8">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">Shipping Content</h3>
-                    <div className="space-y-4">
-                        {fetchedPackage.shipingContent.map((item, index) => (
-                            <div key={index} className="p-4 bg-gray-50 border rounded">
-                                <p><strong>Quantity:</strong> {item.quantity}</p>
-                                <p><strong>Content:</strong> {item.content}</p>
-                                <p><strong>Weight:</strong> {item.weight}</p>
-                            </div>
-                        ))}
-                    </div>
-                    {/* <div className="mt-4">
-                        <div className="md:grid grid-cols-3 gap-4 flex flex-col">
-                            <input
-                                type="text"
-                                placeholder="Content"
-                                value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                                className="p-2 border rounded"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Quantity"
-                                value={quantity}
-                                onChange={(e) => setQuantity(e.target.value)}
-                                className="p-2 border rounded"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Weight (KG)"
-                                value={weight}
-                                onChange={(e) => setWeight(e.target.value)}
-                                className="p-2 border rounded"
-                            />
-                        </div>
-                        <button
-                            onClick={addToArray}
-                            className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-                        >
-                            Add Content
-                        </button>
-                    </div> */}
-                </div>
+                <ShippingContentSection content={content} setContent={setContent} addToContentArray={addToContentArray} fetchedPackage={fetchedPackage} setFetchedPackage={setFetchedPackage} />
 
 
-                {/* Shipment Tracking */}
-                <div className="mt-8">
-                    <h3 className="font-bold">Shipment Tracking</h3>
-                    <div className="space-y-4">
-                        {fetchedPackage.shipingTracking.map((item, index) => (
-                            <div key={index} className="p-4 bg-gray-50 border rounded">
-                                <p><strong>Date/Time:</strong> {item.datetime}</p>
-                                <p><strong>Remark:</strong> {item.remark}</p>
-                                <p><strong>Location:</strong> {item.location}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="mt-4 md:grid grid-cols-4 gap-4 flex flex-col">
-                        <input
-                            type="date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                            className="p-2 border rounded text-gray-400 w-full"
-                        />
-                        <input
-                            type="time"
-                            value={time}
-                            onChange={(e) => setTime(e.target.value)}
-                            className="p-2 border rounded text-gray-400 w-full"
-                        />
-                        <input
-                            type="text"
-                            placeholder="Remark"
-                            value={remark}
-                            onChange={(e) => setRemark(e.target.value)}
-                            className="p-2 border rounded"
-                        />
-                        <input
-                            type="text"
-                            placeholder="Location"
-                            value={itemLocation}
-                            onChange={(e) => setItemLocation(e.target.value)}
-                            className="p-2 border rounded"
-                        />
-                    </div>
-                    <button
-                        onClick={addToTrackingArray}
-                        className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600 transition"
-                    >
-                        Add Tracking
-                    </button>
-                </div>
-
+                {/* Shiping Tracking Section */}
+                <ShipmentTrackingSection tracking={tracking} setTracking={setTracking} addToTrackingArray={addToTrackingArray} fetchedPackage={fetchedPackage} setFetchedPackage={setFetchedPackage} />
 
                 <button className="bg-primary text-white text-center px-4 py-2 mt-4 rounded-md flex justify-center items-center"
                     onClick={handleSubmit}>
@@ -267,8 +216,212 @@ const EditPackage = () => {
                         : 'Update'}
                 </button>
             </div>
-        </div>
+        </div >
     )
 }
 
+const ShippingContentSection = ({
+    content,
+    setContent,
+    addToContentArray,
+    fetchedPackage,
+    setFetchedPackage
+}) => {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setContent((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleEditContent = (index) => {
+        // Load the content to the input fields for editing
+        const itemToEdit = fetchedPackage.shipingContent[index];
+        setContent(itemToEdit);
+        // Remove the item temporarily from the list for editing
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingContent: prev.shipingContent.filter((_, i) => i !== index),
+        }));
+    };
+
+    const handleDeleteContent = (index) => {
+        // Remove the selected content from the list
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingContent: prev.shipingContent.filter((_, i) => i !== index),
+        }));
+    };
+
+    return (
+        <div className="mt-5">
+            <p className="font-extrabold">Shipping Content</p>
+            <div className="flex flex-col md:flex-row gap-2 mt-2">
+                <input
+                    type="number"
+                    name="quantity"
+                    placeholder="Quantity"
+                    value={content.quantity || ""}
+                    onChange={handleChange}
+                    className="border border-black p-2 rounded"
+                />
+                <input
+                    type="text"
+                    name="content"
+                    placeholder="Content"
+                    value={content.content || ""}
+                    onChange={handleChange}
+                    className="border border-black p-2 rounded"
+                />
+                <input
+                    type="number"
+                    name="weight"
+                    placeholder="Weight (Kg)"
+                    value={content.weight || ""}
+                    onChange={handleChange}
+                    className="border border-black p-2 rounded"
+                />
+                <button
+                    onClick={addToContentArray}
+                    className="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600 transition-all"
+                >
+                    {content.id !== undefined ? "Update" : "Add"}
+                </button>
+            </div>
+
+            <div className="mt-3">
+                <ul>
+                    {fetchedPackage.shipingContent.map((item, index) => (
+                        <div key={index} className="p-4 bg-gray-50 border rounded mb-2 flex justify-between items-center">
+                            <div>
+                                <p><strong>Quantity:</strong> {item.quantity}</p>
+                                <p><strong>Content:</strong> {item.content}</p>
+                                <p><strong>Weight:</strong> {item.weight}</p>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => handleEditContent(index)}
+                                    className="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 transition-all"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDeleteContent(index)}
+                                    className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition-all"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+};
+
+
+const ShipmentTrackingSection = ({
+    tracking,
+    setTracking,
+    addToTrackingArray,
+    fetchedPackage,
+    setFetchedPackage
+}) => {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setTracking((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleEditTracking = (index) => {
+        // Load the tracking entry into input fields for editing
+        const trackingToEdit = fetchedPackage.shipingTracking[index];
+        setTracking(trackingToEdit);
+        // Temporarily remove the item from the tracking list
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingTracking: prev.shipingTracking.filter((_, i) => i !== index),
+        }));
+    };
+
+    const handleDeleteTracking = (index) => {
+        // Remove the selected tracking record from the list
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingTracking: prev.shipingTracking.filter((_, i) => i !== index),
+        }));
+    };
+
+    return (
+        <div className="mt-5">
+            <p className="font-extrabold">Shipment Tracking</p>
+            <div className="flex flex-col md:flex-row gap-2 mt-2">
+                <input
+                    type="date"
+                    name="date"
+                    value={tracking.date || ""}
+                    onChange={handleChange}
+                    className="border border-black p-2 rounded"
+                />
+                <input
+                    type="time"
+                    name="time"
+                    value={tracking.time || ""}
+                    onChange={handleChange}
+                    className="border border-black p-2 rounded"
+                />
+                <input
+                    type="text"
+                    name="remark"
+                    placeholder="Remark"
+                    value={tracking.remark || ""}
+                    onChange={handleChange}
+                    className="border border-black p-2 rounded"
+                />
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Location"
+                    value={tracking.location || ""}
+                    onChange={handleChange}
+                    className="border border-black p-2 rounded"
+                />
+                <button
+                    onClick={addToTrackingArray}
+                    className="bg-blue-500 text-white px-3 py-2 rounded hover:bg-green-600 transition-all"
+                >
+                    {tracking.id !== undefined ? "Update" : "Add"}
+                </button>
+            </div>
+            <div className="mt-3">
+                <ul>
+                    {fetchedPackage.shipingTracking.map((item, index) => (
+                        <div
+                            key={index}
+                            className="p-4 bg-gray-50 border rounded mb-2 flex justify-between items-center"
+                        >
+                            <div>
+                                <p><strong>Date/Time:</strong> {item.datetime} {item.time}</p>
+                                <p><strong>Remark:</strong> {item.remark}</p>
+                                <p><strong>Location:</strong> {item.location}</p>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => handleEditTracking(index)}
+                                    className="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 transition-all"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDeleteTracking(index)}
+                                    className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition-all"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+};
 export default EditPackage

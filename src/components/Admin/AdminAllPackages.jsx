@@ -2,6 +2,9 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { CgSpinner } from 'react-icons/cg';
+import { FaHourglass, FaHourglassStart } from 'react-icons/fa';
+import { GiEmptyWoodBucket } from 'react-icons/gi';
+import { ImHourGlass } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -27,7 +30,7 @@ const AdminAllPackages = () => {
     }, []);
 
     return (
-        <div className="p-3">
+        <div className="p-3 flex flex-col h-screen">
             <p className="mt-12 font-extrabold text-2xl border-b border-b-black">All Packages</p>
             <ToastContainer position="top-right" limit={2} hideProgressBar closeOnClick={true} />
 
@@ -52,7 +55,11 @@ const AdminAllPackages = () => {
                     ))}
                 </div>
             ) : (
-                <p>No packages found.</p>
+                <div className="w-full flex-1 text-black text-2xl font-oswald flex justify-center items-center">
+                    <div className="flex flex-col gap-2 items-center">
+                        <p>No packages Found</p>
+                    </div>
+                </div>
             )}
         </div>
     );

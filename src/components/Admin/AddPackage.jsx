@@ -160,7 +160,7 @@ const AddPackage = () => {
                     { label: 'Carrier', name: 'carrier', type: 'text' },
                     { label: 'Comments', name: 'comments', type: 'text' },
                 ].map((input) => (
-                    <InputField key={input.name} label={input.label} name={input.name} value={fetchedPackage[input.name]} type={input.type} onChange={handleChange} />
+                    <InputField key={input.name} label={input.label} name={input.name} value={fetchedPackage[input.name]} type={input.type} onChange={handleChange} placeholder={input.label} />
                 ))}
 
                 <div className="mt-3 flex flex-col gap-2">
@@ -177,10 +177,10 @@ const AddPackage = () => {
                 </div>
 
                 {/* Shipping Content Section */}
-                <ShippingContentSection content={content} setContent={setContent} addToContentArray={addToContentArray} fetchedPackage={fetchedPackage} />
+                <ShippingContentSection content={content} setContent={setContent} addToContentArray={addToContentArray} fetchedPackage={fetchedPackage} setFetchedPackage={setFetchedPackage} />
 
                 {/* Shipment Tracking Section */}
-                <ShipmentTrackingSection tracking={tracking} setTracking={setTracking} addToTrackingArray={addToTrackingArray} fetchedPackage={fetchedPackage} />
+                <ShipmentTrackingSection tracking={tracking} setTracking={setTracking} addToTrackingArray={addToTrackingArray} fetchedPackage={fetchedPackage} setFetchedPackage={setFetchedPackage} />
 
                 {/* Generate Tracking Code */}
                 <div className="w-full flex flex-col gap-2 mt-8">
@@ -188,7 +188,7 @@ const AddPackage = () => {
                         {trackingCode}
                         <Clipboard onClick={copyToClipboard} />
                     </p>
-                    <button className="bg-purple-500 text-white px-3 py-3 rounded-md" onClick={generateTrackingCode}>
+                    <button className="bg-blue-500 text-white px-3 py-3 rounded-md" onClick={generateTrackingCode}>
                         Generate
                     </button>
                 </div>
@@ -211,10 +211,35 @@ const AddPackage = () => {
     );
 };
 
-const ShippingContentSection = ({ content, setContent, addToContentArray, fetchedPackage }) => {
+const ShippingContentSection = ({
+    content,
+    setContent,
+    addToContentArray,
+    fetchedPackage,
+    setFetchedPackage
+}) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setContent((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleEditContent = (index) => {
+        // Load the content to the input fields for editing
+        const itemToEdit = fetchedPackage.shipingContent[index];
+        setContent(itemToEdit);
+        // Remove the item temporarily from the list for editing
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingContent: prev.shipingContent.filter((_, i) => i !== index),
+        }));
+    };
+
+    const handleDeleteContent = (index) => {
+        // Remove the selected content from the list
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingContent: prev.shipingContent.filter((_, i) => i !== index),
+        }));
     };
 
     return (
@@ -225,7 +250,7 @@ const ShippingContentSection = ({ content, setContent, addToContentArray, fetche
                     type="number"
                     name="quantity"
                     placeholder="Quantity"
-                    value={content.quantity}
+                    value={content.quantity || ""}
                     onChange={handleChange}
                     className="border border-black p-2 rounded"
                 />
@@ -233,7 +258,7 @@ const ShippingContentSection = ({ content, setContent, addToContentArray, fetche
                     type="text"
                     name="content"
                     placeholder="Content"
-                    value={content.content}
+                    value={content.content || ""}
                     onChange={handleChange}
                     className="border border-black p-2 rounded"
                 />
@@ -241,7 +266,7 @@ const ShippingContentSection = ({ content, setContent, addToContentArray, fetche
                     type="number"
                     name="weight"
                     placeholder="Weight (Kg)"
-                    value={content.weight}
+                    value={content.weight || ""}
                     onChange={handleChange}
                     className="border border-black p-2 rounded"
                 />
@@ -249,17 +274,33 @@ const ShippingContentSection = ({ content, setContent, addToContentArray, fetche
                     onClick={addToContentArray}
                     className="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600 transition-all"
                 >
-                    Add
+                    {content.id !== undefined ? "Update" : "Add"}
                 </button>
             </div>
 
             <div className="mt-3">
                 <ul>
                     {fetchedPackage.shipingContent.map((item, index) => (
-                        <div key={index} className="p-4 bg-gray-50 border rounded">
-                            <p><strong>Quantity:</strong> {item.quantity}</p>
-                            <p><strong>Content:</strong> {item.content}</p>
-                            <p><strong>Weight:</strong> {item.weight}</p>
+                        <div key={index} className="p-4 bg-gray-50 border rounded mb-2 flex justify-between items-center">
+                            <div>
+                                <p><strong>Quantity:</strong> {item.quantity}</p>
+                                <p><strong>Content:</strong> {item.content}</p>
+                                <p><strong>Weight:</strong> {item.weight}</p>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => handleEditContent(index)}
+                                    className="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 transition-all"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDeleteContent(index)}
+                                    className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition-all"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </ul>
@@ -268,10 +309,35 @@ const ShippingContentSection = ({ content, setContent, addToContentArray, fetche
     );
 };
 
-const ShipmentTrackingSection = ({ tracking, setTracking, addToTrackingArray, fetchedPackage }) => {
+const ShipmentTrackingSection = ({
+    tracking,
+    setTracking,
+    addToTrackingArray,
+    fetchedPackage,
+    setFetchedPackage
+}) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setTracking((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleEditTracking = (index) => {
+        // Load the tracking entry into input fields for editing
+        const trackingToEdit = fetchedPackage.shipingTracking[index];
+        setTracking(trackingToEdit);
+        // Temporarily remove the item from the tracking list
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingTracking: prev.shipingTracking.filter((_, i) => i !== index),
+        }));
+    };
+
+    const handleDeleteTracking = (index) => {
+        // Remove the selected tracking record from the list
+        setFetchedPackage((prev) => ({
+            ...prev,
+            shipingTracking: prev.shipingTracking.filter((_, i) => i !== index),
+        }));
     };
 
     return (
@@ -281,14 +347,14 @@ const ShipmentTrackingSection = ({ tracking, setTracking, addToTrackingArray, fe
                 <input
                     type="date"
                     name="date"
-                    value={tracking.date}
+                    value={tracking.date || ""}
                     onChange={handleChange}
                     className="border border-black p-2 rounded"
                 />
                 <input
                     type="time"
                     name="time"
-                    value={tracking.time}
+                    value={tracking.time || ""}
                     onChange={handleChange}
                     className="border border-black p-2 rounded"
                 />
@@ -296,7 +362,7 @@ const ShipmentTrackingSection = ({ tracking, setTracking, addToTrackingArray, fe
                     type="text"
                     name="remark"
                     placeholder="Remark"
-                    value={tracking.remark}
+                    value={tracking.remark || ""}
                     onChange={handleChange}
                     className="border border-black p-2 rounded"
                 />
@@ -304,24 +370,43 @@ const ShipmentTrackingSection = ({ tracking, setTracking, addToTrackingArray, fe
                     type="text"
                     name="location"
                     placeholder="Location"
-                    value={tracking.location}
+                    value={tracking.location || ""}
                     onChange={handleChange}
                     className="border border-black p-2 rounded"
                 />
                 <button
                     onClick={addToTrackingArray}
-                    className="bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600 transition-all"
+                    className="bg-blue-500 text-white px-3 py-2 rounded hover:bg-green-600 transition-all"
                 >
-                    Add
+                    {tracking.id !== undefined ? "Update" : "Add"}
                 </button>
             </div>
             <div className="mt-3">
                 <ul>
                     {fetchedPackage.shipingTracking.map((item, index) => (
-                        <div key={index} className="p-4 bg-gray-50 border rounded">
-                            <p><strong>Date/Time:</strong> {item.datetime}</p>
-                            <p><strong>Remark:</strong> {item.remark}</p>
-                            <p><strong>Location:</strong> {item.location}</p>
+                        <div
+                            key={index}
+                            className="p-4 bg-gray-50 border rounded mb-2 flex justify-between items-center"
+                        >
+                            <div>
+                                <p><strong>Date/Time:</strong> {item.date} {item.time}</p>
+                                <p><strong>Remark:</strong> {item.remark}</p>
+                                <p><strong>Location:</strong> {item.location}</p>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => handleEditTracking(index)}
+                                    className="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-600 transition-all"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDeleteTracking(index)}
+                                    className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition-all"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </ul>
@@ -329,5 +414,6 @@ const ShipmentTrackingSection = ({ tracking, setTracking, addToTrackingArray, fe
         </div>
     );
 };
+
 
 export default AddPackage;
