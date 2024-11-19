@@ -183,7 +183,7 @@ const AddPackage = () => {
                 <ShipmentTrackingSection tracking={tracking} setTracking={setTracking} addToTrackingArray={addToTrackingArray} fetchedPackage={fetchedPackage} setFetchedPackage={setFetchedPackage} />
 
                 {/* Generate Tracking Code */}
-                <div className="w-full flex flex-col gap-2 mt-8">
+                <div className="w-full flex flex-col gap-2 mt-12">
                     <p className="border border-gray-200 p-2 flex flex-row items-center justify-between">
                         {trackingCode}
                         <Clipboard onClick={copyToClipboard} />

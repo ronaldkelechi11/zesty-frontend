@@ -18,8 +18,8 @@ const AdminAllPackages = () => {
         try {
             const { data } = await axios.get(API_URL + '/admin');
             setFetchedPackages(data.allPackages);
-        } catch (err) {
-            toast.error(`Error: ${err?.message}`);
+        } catch ({ response }) {
+            toast.error(`${response.data.message} ${response.status}`);
         } finally {
             setIsLoading(false);
         }

@@ -106,7 +106,6 @@ const EditPackage = () => {
     };
 
     function handleSubmit() {
-        console.log(fetchedPackage);
 
         setIsLoading(true)
         axios.put(API_URL + "/admin", fetchedPackage)
@@ -132,7 +131,6 @@ const EditPackage = () => {
                     shipingContent: [],
                     shipingTracking: [],
                 });
-                console.log(result.data);
                 toast.success(`Package Updated`)
                 setIsLoading(false)
             }).catch(({ response }) => {

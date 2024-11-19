@@ -26,9 +26,8 @@ const Login = () => {
         toast.success('Admin Login Successful')
         sessionStorage.setItem('loggedIn', true)
         navigate('/admin')
-      }).catch((err) => {
-        toast.error(`${err?.message}`)
-        console.log(err);
+      }).catch(({response}) => {
+        toast.error(`${response.message}`)
         setIsLoading(false)
       });
   }
