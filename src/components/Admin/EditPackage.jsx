@@ -109,7 +109,7 @@ const EditPackage = () => {
         console.log(fetchedPackage);
 
         setIsLoading(true)
-        axios.put(API_URL + "/admin", { fetchedPackage })
+        axios.put(API_URL + "/admin", fetchedPackage)
             .then((result) => {
                 setFetchedPackage({
                     trackingId: '',
@@ -132,10 +132,11 @@ const EditPackage = () => {
                     shipingContent: [],
                     shipingTracking: [],
                 });
+                console.log(result.data);
                 toast.success(`Package Updated`)
                 setIsLoading(false)
-            }).catch((err) => {
-                toast.error(`${err?.message}`)
+            }).catch(({ response }) => {
+                toast.error(`${response.data.message} ${response.status}`);
                 setIsLoading(false)
             });
     }
