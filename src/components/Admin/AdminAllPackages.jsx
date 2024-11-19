@@ -31,7 +31,7 @@ const AdminAllPackages = () => {
 
     return (
         <div className="p-3 flex flex-col h-screen">
-            <p className="mt-12 font-extrabold text-2xl border-b border-b-black">All Packages</p>
+            <p className="mt-12 font-extrabold text-2xl">All Packages</p>
             <ToastContainer position="top-right" limit={2} hideProgressBar closeOnClick={true} />
 
             {isLoading ? (
