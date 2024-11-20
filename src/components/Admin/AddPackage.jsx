@@ -32,6 +32,7 @@ const AddPackage = () => {
         carrier: '',
         comments: '',
         status: false,
+        currentLocation: '',
         shipingContent: [],
         shipingTracking: [],
     });
@@ -124,6 +125,7 @@ const AddPackage = () => {
                 carrier: '',
                 comments: '',
                 status: false,
+                currentLocation: '',
                 shipingContent: [],
                 shipingTracking: [],
             });
@@ -159,6 +161,7 @@ const AddPackage = () => {
                     { label: 'Type of Shipment', name: 'typeOfShipment', type: 'text' },
                     { label: 'Carrier', name: 'carrier', type: 'text' },
                     { label: 'Comments', name: 'comments', type: 'text' },
+                    { label: 'Current Location', name: 'Current Location', type: 'text' },
                 ].map((input) => (
                     <InputField key={input.name} label={input.label} name={input.name} value={fetchedPackage[input.name]} type={input.type} onChange={handleChange} placeholder={input.label} />
                 ))}
@@ -169,8 +172,7 @@ const AddPackage = () => {
                         name="status"
                         value={fetchedPackage.status}
                         onChange={handleChange}
-                        className="bg-transparent text-sm border border-black text-black rounded-lg p-3 hover:scale-105 transition-all"
-                    >
+                        className="bg-transparent text-sm border border-black text-black rounded-lg p-3 hover:scale-105 transition-all">
                         <option value={false}>On Hold</option>
                         <option value={true}>On Transit</option>
                     </select>

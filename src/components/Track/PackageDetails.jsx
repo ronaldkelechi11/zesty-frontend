@@ -23,6 +23,7 @@ const PackageDetails = ({ packageDetails }) => {
             carrier: "",
             comments: "",
             status: true,
+            currentLocation: "",
             shipingContent: [
                 {
                     content: "",
@@ -74,6 +75,11 @@ const PackageDetails = ({ packageDetails }) => {
 
                     <div className="mt-4 flex flex-col gap-4">
                         <h1 className="font-bold border-b-black border-b mb-2 text-2xl">Shipment Information</h1>
+
+
+                        <p className="font-bold">Current Location: <br />
+                            <span className={"font-normal uppercase"}>{fetchedPackage.currentLocation}</span>
+                        </p>
 
                         <p className="font-bold">Origin Country: <br />
                             <span className="font-normal">{fetchedPackage.originCountry}</span>

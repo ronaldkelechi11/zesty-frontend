@@ -31,6 +31,7 @@ const EditPackage = () => {
             carrier: "",
             comments: "",
             status: true,
+            currentLocation: '',
             shipingContent: [
                 {
                     content: "",
@@ -128,6 +129,7 @@ const EditPackage = () => {
                     carrier: '',
                     comments: '',
                     status: false,
+                    currentLocation: '',
                     shipingContent: [],
                     shipingTracking: [],
                 });
@@ -181,6 +183,8 @@ const EditPackage = () => {
                 <InputField label={'Type of Shipment'} placeholder={fetchedPackage.typeOfShipment} name={"typeOfShipment"} value={fetchedPackage.typeOfShipment} type={'text'} onChange={handleChange} />
 
                 <InputField label={'Comments'} placeholder={fetchedPackage.comments} name={"comments"} value={fetchedPackage.comments} type={'text'} onChange={handleChange} />
+
+                <InputField label={'Current Location'} placeholder={fetchedPackage.currentLocation} name={"currentLocation"} value={fetchedPackage.currentLocation} type={'text'} onChange={handleChange} />
 
                 <div className="mt-3 flex flex-col gap-2">
                     <label className="font-bold">Status</label>
