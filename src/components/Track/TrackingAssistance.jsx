@@ -5,8 +5,8 @@ const TrackingAssistance = () => {
             <p className="text-gray-700 mb-4">For any issues or clarifications regarding your package, please feel free to contact us at:</p>
             <ul className="space-y-2">
                 <li>
-                    <a href="mailto:zestylogisticservices@gmail.com" className="text-gray-700 underline text-sm text-wrap hover:underline">
-                        zestylogisticservices@gmail.com
+                    <a href="mailto:zestydeliveryservices@gmail.com" className="text-gray-700 underline text-sm text-wrap hover:underline">
+                        zestydeliveryservices@gmail.com
                     </a>
                 </li>
             </ul>
