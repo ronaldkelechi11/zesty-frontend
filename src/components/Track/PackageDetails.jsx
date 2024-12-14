@@ -34,7 +34,7 @@ const PackageDetails = ({ packageDetails }) => {
             shipingTracking: [
                 {
                     datetime: "",
-                    activity: "",
+                    remark: "",
                     location: ""
                 }
             ]
@@ -67,9 +67,9 @@ const PackageDetails = ({ packageDetails }) => {
                     <div className="mt-4">
                         <h1 className="font-bold border-b-black border-b mb-2 text-2xl">Reciver Information</h1>
                         <p>{fetchedPackage.receiverName}</p>
-                        <p>{fetchedPackage.senderEmailAddress}</p>
-                        <p>{fetchedPackage.senderTelephone}</p>
-                        <p>{fetchedPackage.senderAddress}</p>
+                        <p>{fetchedPackage.receiverEmailAddress}</p>
+                        <p>{fetchedPackage.receiverTelephone}</p>
+                        <p>{fetchedPackage.receiverAddress}</p>
                     </div>
 
 
@@ -147,14 +147,14 @@ const PackageDetails = ({ packageDetails }) => {
                     <div className="my-8">
                         <div className="grid grid-cols-3 gap-4 text-center font-semibold text-gray-800 bg-indigo-50 p-4 rounded-md shadow">
                             <p>Time</p>
-                            <p>Activity</p>
+                            <p>Remark</p>
                             <p>Location</p>
                         </div>
                         <div className="text-center flex flex-col gap-3 text-gray-700 mt-4">
                             {fetchedPackage.shipingTracking?.map((trackingItem, index) => (
                                 <div key={index} className="grid grid-cols-3 gap-4 ">
                                     <p>{trackingItem.datetime}</p>
-                                    <p>{trackingItem.activity}</p>
+                                    <p>{trackingItem.remark}</p>
                                     <p
                                         className="underline cursor-pointer text-indigo-600 hover:text-indigo-400">
                                         {trackingItem.location}

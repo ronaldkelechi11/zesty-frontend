@@ -385,7 +385,7 @@ const ShipmentTrackingSection = ({
             </div>
             <div className="mt-3">
                 <ul>
-                    {fetchedPackage.shipingTracking.map((item, index) => (
+                    {fetchedPackage?.shipingTracking.map((item, index) => (
                         <div
                             key={index}
                             className="p-4 bg-gray-50 border rounded mb-2 flex justify-between items-center"
