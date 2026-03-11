@@ -11,24 +11,25 @@ const Gallery = () => {
         <div className="flex flex-wrap md:-m-2 -m-1">
           <div className="flex flex-wrap w-1/2">
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/wp3714801.jpeg" />
+              {/* ⚡ Bolt: Added lazy loading to images to improve initial page load performance */}
+              <img loading="lazy" alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/wp3714801.jpeg" />
             </div>
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/shipindus.jpeg" />
+              <img loading="lazy" alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/shipindus.jpeg" />
             </div>
             <div className="md:p-2 p-1 w-full">
-              <img alt="gallery" className="w-full h-full object-cover object-center block" src="/assets/courier_girl.jpg" />
+              <img loading="lazy" alt="gallery" className="w-full h-full object-cover object-center block" src="/assets/courier_girl.jpg" />
             </div>
           </div>
           <div className="flex flex-wrap w-1/2">
             <div className="md:p-2 p-1 w-full">
-              <img alt="gallery" className="w-full h-full object-cover object-center block" src="/assets/delivery_man.jpg" />
+              <img loading="lazy" alt="gallery" className="w-full h-full object-cover object-center block" src="/assets/delivery_man.jpg" />
             </div>
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/image1.jpeg" />
+              <img loading="lazy" alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/image1.jpeg" />
             </div>
             <div className="md:p-2 p-1 w-1/2">
-              <img alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/parcels.jpg" />
+              <img loading="lazy" alt="gallery" className="w-full object-cover h-full object-center block" src="/assets/parcels.jpg" />
             </div>
           </div>
         </div>
